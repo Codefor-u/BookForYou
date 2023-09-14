@@ -1,0 +1,7 @@
+venv/
+# Ignore __pycache__ directories
+__pycache__/
+# Ignore .pyc files
+*.pyc
+# Ignore pytest cache
+.pytest_cache/
