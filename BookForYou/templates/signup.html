@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title> BOOK4YOU</title>
+
+</head>
+<style>
+    .tanvi{
+        padding-left: 10px;
+    }
+</style>
+
+<body>
+    <div class="container py-5">
+        <div class="col-md-8 offset-2">
+
+            <h1 class="mb-5">Create Your Account</h1>
+
+
+            <div class="card mb-4" id="forms">
+                <div class="card-header">
+                    <small>
+                        With this account, access your's and other's portfolio and make your own innovative portfolio.
+                    </small>
+                </div>
+                <div class="card-body">
+
+                    {% include 'partials/messages.html' %}
+
+                    <form method="post" action="">
+                        <fieldset>
+                            {% csrf_token %}
+
+                            {% for fm in form %}
+                            <div class="form-group">
+                                {{fm.label_tag}}
+                                {{fm}}
+                                <small class="text-danger">{{fm.errors|striptags}}</small>
+                            </div>
+                            {% endfor %}
+                            <button class="btn btn-primary" type="submit">Submit</button> <a class="tanvi" href="/login">Already have an account?</a>
+                        </fieldset>
+
+                        {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger alert-dismissible fade show" role="alert" my-3">
+                            {{error}}
+                        </p>
+                        {% endfor %}
+                        {% endif %}
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+</body>
+
+</html>

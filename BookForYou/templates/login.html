@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <style>
+      .newuser{
+        display: block;
+
+      }
         html,
 body {
   height: 100%;
@@ -73,19 +77,20 @@ body {
     </head>
     <body class="text-center">
       <form class="form-signin" method = "post" action = "/login" >
+         {% csrf_token %}
     <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail" class="sr-only">Username</label>
-    <input type="text" id="inputEmail" name = "username" class="form-control" placeholder="username" required autofocus>
+    <input type="text" id="inputEmail" name = "Username" class="form-control" placeholder="Username" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" name = "password" class="form-control" placeholder="Password" required>
     <div class="checkbox mb-3">
       <label>
         <input type="checkbox" value="remember-me"> Remember me
       </label>
+      <a class="newuser" href="/register">New User?</a>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
   </form>
   </body>
 </html>
