@@ -1,52 +1,43 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.contrib.auth import authenticate
-from django.contrib.auth import logout,login
-from .forms import RegistrationForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from django.views import View
-#Password for test user is tanvi@123
-# Create your views here.
+
 def home(request):
-    # context = {
-    #     'variable' : "This is sent"
-    # }
-    if request.user.is_anonymous:
-        return redirect("/login")
-    
-    return render(request,'home.html')
+    is_user_authenticated = request.user.is_authenticated
+    return render(request, 'home.html', {'is_user_authenticated': is_user_authenticated})
 
 def about(request):
-    return render(request,'about.html')
+    return render(request, 'about.html')
 
 def contact(request):
-    return render(request,'contact.html')
+    return render(request, 'contact.html')
 
 def loginuser(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username = username, password = password)
-        if user is not None:
-            login(request,user)
-            return redirect("/")
-        else:
-            return render(request,'home.html')
-    
-    return render(request,'login.html')
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, 'Logged in successfully.')
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
 
 def logoutuser(request):
     logout(request)
-    return redirect("/login")
+    messages.success(request, 'Logged out successfully.')
+    return redirect('home')
 
-class RegistrationView(View):
-    def get(self, request):
-        form = RegistrationForm()
-        return render(request, 'signup.html', {'form': form})
-    
-    def post(self, request):
-        form = RegistrationForm(request.POST)
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            messages.success(request, "Congratulations! Registration Successful!")
-            form.save()
-        return render(request, 'home.html', {'form': form})
-    
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Account created successfully.')
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
