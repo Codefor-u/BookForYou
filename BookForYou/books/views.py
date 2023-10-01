@@ -6,14 +6,14 @@ from django.contrib import messages
 from django.views import View
 #Password for test user is tanvi@123
 # Create your views here.
-def index(request):
+def home(request):
     # context = {
     #     'variable' : "This is sent"
     # }
     if request.user.is_anonymous:
         return redirect("/login")
     
-    return render(request,'index.html')
+    return render(request,'home.html')
 
 def about(request):
     return render(request,'about.html')
@@ -30,14 +30,13 @@ def loginuser(request):
             login(request,user)
             return redirect("/")
         else:
-            return render(request,'login.html')
+            return render(request,'home.html')
     
     return render(request,'login.html')
 
 def logoutuser(request):
     logout(request)
     return redirect("/login")
-
 
 class RegistrationView(View):
     def get(self, request):
@@ -49,6 +48,5 @@ class RegistrationView(View):
         if form.is_valid():
             messages.success(request, "Congratulations! Registration Successful!")
             form.save()
-        return render(request, 'signup.html', {'form': form})
-
- 
+        return render(request, 'home.html', {'form': form})
+    
