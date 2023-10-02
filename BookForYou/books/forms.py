@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm,PasswordResetForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
+from .models import Book
 
 
 # Create your forms here.
@@ -24,3 +25,8 @@ class PasswordResetForm(PasswordResetForm):
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'description', 'cover_image']
