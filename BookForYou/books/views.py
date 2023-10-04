@@ -2,9 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from .forms import CustomAuthenticationForm,RegistrationForm,BookForm
-from .models import Book
+from .forms import CustomAuthenticationForm,RegistrationForm,BookForm 
+from .models import Book, Profile
+from django.contrib.auth.decorators import login_required
  
+from django.contrib.auth.models import User
+
+# Query to retrieve all users
+
 def home(request):
     is_user_authenticated = request.user.is_authenticated
     return render(request, 'home.html', {'is_user_authenticated': is_user_authenticated})
@@ -70,3 +75,24 @@ def edit_book(request, book_id):
     else:
         form = BookForm(instance=book)
     return render(request, 'books/edit_books.html', {'form': form, 'book': book})
+
+@login_required
+def profile_search(request):
+    """
+    Searches for profiles by their username.
+    View url: /profiles/search/
+    """
+    search = request.GET.get("q", "")
+    profiles = Profile.objects.filter(user__username__icontains=search)
+    
+    context = {
+        "search": search,
+        "profiles": profiles,
+        "is_user_authenticated": True,
+
+    }
+
+    if search:
+        return render(request, "profile_search.html", context)
+
+    return render(request, "profile_search.html")

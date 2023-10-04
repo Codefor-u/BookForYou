@@ -27,19 +27,30 @@
           <a class="dropdown-item" href="/contact">WRITE FOR US</a>
         </div>
       </li>
+
       <!-- Conditional display based on user authentication -->
       {% if is_user_authenticated %}
+        <li class="nav-item">
+          <form class="form-inline my-2 my-lg-0" action="{% url 'profile_search' %}" method="GET">
+            <div class="ui action left icon input">
+              <input class="btn btn-outline-success my-2 my-sm-0" type="search" name='q' placeholder="Search for profiles"
+                aria-label="Search">
+              <i class="search icon"></i>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </div>
+          </form>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>
         </li>
 
       {% else %}
-        <li class="nav-item">
-          <a class="btn btn-outline-danger" href="/login">LOGIN</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-danger" href="/signup">SIGNUP</a>
-        </li>
+      <li class="nav-item">
+        <a class="btn btn-outline-danger" href="/login">LOGIN</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-outline-danger" href="/signup">SIGNUP</a>
+      </li>
       {% endif %}
     </ul>
   </div>

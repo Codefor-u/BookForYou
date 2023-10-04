@@ -10,3 +10,11 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class Profile(models.Model):
+    username = models.CharField(max_length=30, unique=True)
+    full_name = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # Add other fields as needed (e.g., bio, profile picture, etc.)
+

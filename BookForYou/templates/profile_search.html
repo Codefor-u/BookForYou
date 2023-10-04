@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+    Search
+{% endblock  %}
+{% block content %}
+    {% if search %}
+        {% if profiles %}
+            <h1>Showing profiles for result "{{ search }}"</h1>
+            <br>
+            {% for profile in profiles %}
+                <div class='ui segment'>
+                    <div class='ui grid'>
+                        <div class='row'>
+                            <div class='thirteen wide column'>
+                                <h3>{{ profile.user }}</h3>
+                                    <button style="margin-top:10px;
+                                                   width:200px"
+                                            class='ui primary button mb-5 w-big'>See Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1>No Profiles found.</h1>
+        {% endif %}
+    {% else %}
+        <h1>To use Search type text into the Search bar</h1>
+    {% endif %}
+{% endblock  %}
+
