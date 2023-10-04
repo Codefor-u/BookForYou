@@ -19,6 +19,17 @@ class RegistrationForm(UserCreationForm):
         labels = {'email': 'Email'}
         widgets = {'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Username'})}
 
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+
+        # Create a corresponding Profile instance for the new user
+        Profile.objects.get_or_create(user=user)
+
+        return user
+
 # class PasswordResetForm(PasswordResetForm):
 #     email = forms.EmailField(label=_("Email"), max_length=254, widget=forms.EmailInput(attrs={'autocomplete':'email', 'class':'form-control'}))
 

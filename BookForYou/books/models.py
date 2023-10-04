@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 class Book(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -17,4 +18,6 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Add other fields as needed (e.g., bio, profile picture, etc.)
+
+
 
