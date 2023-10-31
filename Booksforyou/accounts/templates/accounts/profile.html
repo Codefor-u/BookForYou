@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>User Profile</h2>
+
+    {% if s_user %}
+        <div class="card">
+            <div class="card-body">
+                <h3>User Information</h3>
+                <p><strong>Username:</strong> {{ s_user.username }}</p>
+                <p><strong>Email:</strong> {{ s_user.email }}</p>
+                <p><strong>First Name:</strong> {{ s_user.first_name }}</p>
+                <p><strong>Last Name:</strong> {{ s_user.last_name }}</p>
+                <p><strong>Profile Picture:</strong> {{ s_user.profile_picture }}</p>
+                <!-- Add more user attributes as needed -->
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h3>Uploaded Books</h3>
+                <ul>
+                    {% for book in books %}
+                        <li>{{ book.title }}</li>
+                        <!-- You can display other book attributes as needed -->
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
